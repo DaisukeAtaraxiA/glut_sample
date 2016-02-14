@@ -47,12 +47,12 @@ void mouse(int button, int state, int x, int y) {
   switch (button) {
     case GLUT_LEFT_BUTTON:
       if (state == GLUT_DOWN) {
-				mouse_pos[0] = x;
-				mouse_pos[1] = y;
-				mouse_l = true;
+        mouse_pos[0] = x;
+        mouse_pos[1] = y;
+        mouse_l = true;
       }
       if (state == GLUT_UP) {
-				mouse_l = false;
+        mouse_l = false;
       }
       break;
     default:
@@ -86,7 +86,14 @@ void resize(int width, int height) {
 
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  glOrtho(-1.5, 1.5, -1.5, 1.5, -1.0, 1.0);
+
+  GLfloat w = static_cast<GLfloat>(width);
+  GLfloat h = static_cast<GLfloat>(height);
+  if (w <= h) {
+    glOrtho(-2, 2, -2 * h / w, 2.0 * h / w, -10.0, 10.0);
+  } else {
+    glOrtho(-2 * w / h, 2.0 * w / h, -2.0, 2.0, -10.0, 10.0);
+  }
 }
 
 }  // namespace
